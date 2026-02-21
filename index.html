@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>B&M Auto Dealers & Global Distribution</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    ‎<img src="via.png" alt="Logo" class="top-right-logo">
     <style>
         /* Reset & Base Styles */
         * {
@@ -641,4 +640,68 @@
                     <div class="vehicle-info">
                         <h3>${vehicle.model}</h3>
                         <p class="vehicle-specs">${vehicle.year} • ${vehicle.engine} • ${vehicle.transmission}</p>
-                        <p class="vehicle-price">${curr
+                        <p class="vehicle-price">${currencySymbol}${price.toLocaleString()}</p>
+                        <div class="vehicle-actions">
+                            <button class="btn btn-primary" onclick="buyNow(${vehicle.id})">Buy Now</button>
+                            <button class="btn btn-secondary" onclick="requestQuote(${vehicle.id})">Request Quote</button>
+                        </div>
+                    </div>
+                `;
+                vehiclesGrid.appendChild(vehicleCard);
+            });
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            currencySelector.addEventListener('change', function() {
+                currentCurrency = this.value;
+                renderVehicles();
+            });
+
+            quoteForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Quote request submitted successfully! We will contact you soon.');
+                closeModal();
+            });
+
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for contacting us! We will get back to you soon.');
+                contactForm.reset();
+            });
+        }
+
+        // Buy now function
+        function buyNow(vehicleId) {
+            const vehicle = vehicles.find(v => v.id === vehicleId);
+            if (vehicle) {
+                alert(`Thank you for your interest in the ${vehicle.model}! Please contact us to complete your purchase.`);
+            }
+        }
+
+        // Request quote function
+        function requestQuote(vehicleId) {
+            const vehicle = vehicles.find(v => v.id === vehicleId);
+            if (vehicle) {
+                document.getElementById('quoteVehicle').value = vehicle.model;
+                quoteModal.style.display = 'flex';
+            }
+        }
+
+        // Close modal function
+        function closeModal() {
+            quoteModal.style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target === quoteModal) {
+                closeModal();
+            }
+        }
+
+        // Initialize the application
+        init();
+    </script>
+</body>
+</html>
