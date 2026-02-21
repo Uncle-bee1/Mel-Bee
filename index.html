@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B&M Auto Dealers & Global Distribution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a3a6c;
+            --secondary: #d4af37;
+            --dark: #0f1c2e;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --success: #28a745;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            text-align: center;
+        }
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-4 {
+            margin-bottom: 2rem;
+        }
+
+        .mt-4 {
+            margin-top: 2rem;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--dark);
+            color: white;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .top-right-logo {
+            height: 50px;
+            width: auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        .currency-selector {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero-btns {
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Vehicles Section */
+        .vehicles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .vehicle-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: var(--transition);
+        }
+
+        .vehicle-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .vehicle-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .vehicle-info {
+            padding: 1.5rem;
+        }
+
+        .vehicle-price {
+            color: var(--secondary);
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        .vehicle-specs {
+            color: var(--gray);
+            margin: 0.5rem 0;
+        }
+
+        .vehicle-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background-color: var(--dark);
+            color: white;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .testimonial-card {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .testimonial-card i {
+            font-size: 2rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        /* About & Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .feature-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .global-presence {
+            margin-top: 2rem;
+            font-style: italic;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .logo-container {
+                margin-bottom: 10px;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1.2rem;
+            }
+
+            .section {
+                padding: 60px 0;
+            }
+        }
+    </style>
+</head><body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo-container">
+                    <img src="logo.jpg" alt="Logo" class="top-right-logo">
+                    <div class="logo">B&M Auto</div>
+                </div>
+                <div class="nav-links">
+                    <a href="#home">Home</a>
+                    <a href="#vehicles">Vehicles</a>
+                    <a href="#about">About</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <select class="currency-selector" id="currencySelector">
+                    <option value="naira">₦ Naira</option>
+                    <option value="usd">$ USD</option>
+                </select>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Drive Excellence</h1>
+            <p>Delivering Quality Worldwide</p>
+            <div class="hero-btns">
+                <a href="#vehicles" class="btn btn-primary">Browse Cars</a>
+                <a href="#contact" class="btn btn-secondary">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vehicles Section -->
+    <section class="section" id="vehicles">
+        <div class="container">
+            <h2 class="text-center mb-4">Featured Vehicles</h2>
+            <div class="vehicles-grid" id="vehiclesGrid">
+                <!-- Vehicle cards will be generated here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section testimonials">
+        <div class="container">
+            <h2 class="text-center mb-4" style="color: white;">What Our Customers Say</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-left"></i>
+                    <p>"Exceptional quality and service. The car exceeded our expectations."</p>
+                    <strong>- John Smith, Corporate Buyer</strong>
+                </div>
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-left"></i>
+                    <p>"Reliable distribution network and competitive pricing."</p>
+                    <strong>- Sarah Johnson, Fleet Manager</strong>
+                </div>
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-left"></i>
+                    <p>"Professional service from order to delivery."</p>
+                    <strong>- Michael Brown, International Dealer</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section" id="about">
+        <div class="container">
+            <h2 class="text-center mb-4">Why Choose B&M Auto</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-globe"></i>
+                    <h3>Global Distribution</h3>
+                    <p>Worldwide shipping and logistics network</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Quality Assurance</h3>
+                    <p>Rigorous quality control and inspection processes</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-tags"></i>
+                    <h3>Competitive Pricing</h3>
+                    <p>Best prices with flexible payment options</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-headset"></i>
+                    <h3>24/7 Support</h3>
+                    <p>Dedicated customer service worldwide</p>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <h3>About B&M Auto</h3>
+                <p>Founded in 2010, B&M Auto has become a leading global distributor of premium automobiles, serving customers across Africa, Europe, Asia, and the Americas.</p>
+            </div>
+        </div>
+    </section>
+    <!-- Distributor CTA -->
+    <section class="section" style="background-color: var(--primary); color: white;">
+        <div class="container text-center">
+            <h2>Join Our Distributor Network</h2>
+            <p>Partner with us to bring quality vehicles to your market</p>
+            <a href="#contact" class="btn btn-secondary">Become a Distributor</a>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" id="contact">
+        <div class="container">
+            <h2 class="text-center mb-4">Contact Us</h2>
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <h3>B&M Auto Dealers & Global Distribution</h3>
+            <p>Premium automotive solutions worldwide</p>
+            <div class="global-presence">
+                <p>Serving customers in 50+ countries across 6 continents</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Quote Modal -->
+    <div class="modal" id="quoteModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h3>Request a Quote</h3>
+            <form id="quoteForm">
+                <div class="form-group">
+                    <label for="quoteName">Name</label>
+                    <input type="text" id="quoteName" required>
+                </div>
+                <div class="form-group">
+                    <label for="quoteEmail">Email</label>
+                    <input type="email" id="quoteEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="quoteVehicle">Vehicle Interested In</label>
+                    <input type="text" id="quoteVehicle" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="quoteQuantity">Quantity Needed</label>
+                    <input type="number" id="quoteQuantity" min="1" required>
+                </div>
+                <button type="submit" class="btn btn-secondary">Get Quote</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Exchange rate (1 USD = 1500 NGN)
+        const EXCHANGE_RATE = 1500;
+
+        // Vehicle data
+        const vehicles = [
+            {
+                id: 1,
+                model: "Toyota Camry",
+                image: "https://images.unsplash.com/photo-1542362567-b07e54358753?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                year: 2024,
+                engine: "2.5L Hybrid",
+                transmission: "Automatic",
+                price_naira: 15000000,
+                price_usd: 10000,
+                category: "Sedan"
+            },
+            {
+                id: 2,
+                model: "Honda CR-V",
+                image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                year: 2024,
+                engine: "1.5L Turbo",
+                transmission: "CVT",
+                price_naira: 18000000,
+                price_usd: 12000,
+                category: "SUV"
+            },
+            {
+                id: 3,
+                model: "Ford F-150",
+                image: "https://images.unsplash.com/photo-1553440569-bcc63803a83d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                year: 2024,
+                engine: "3.5L V6",
+                transmission: "Automatic",
+                price_naira: 25000000,
+                price_usd: 16667,
+                category: "Truck"
+            },
+            {
+                id: 4,
+                model: "BMW X5",
+                image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                year: 2024,
+                engine: "3.0L Turbo",
+                transmission: "Automatic",
+                price_naira: 45000000,
+                price_usd: 30000,
+                category: "Luxury"
+            },
+            {
+                id: 5,
+                model: "Mercedes C-Class",
+                image: "https://images.unsplash.com/photo-1553440569-bcc63803a83d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                year: 2024,
+                engine: "2.0L Turbo",
+                transmission: "Automatic",
+                price_naira: 38000000,
+                price_usd: 25333,
+                category: "Luxury"
+            },
+            {
+                id: 6,
+                model: "Audi A4",
+                image: "https://images.unsplash.com/photo-1542362567-b07e54358753?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                year: 2024,
+                engine: "2.0L Turbo",
+                transmission: "Automatic",
+                price_naira: 35000000,
+                price_usd: 23333,
+                category: "Luxury"
+            }
+        ];
+
+        // DOM Elements
+        const vehiclesGrid = document.getElementById('vehiclesGrid');
+        const currencySelector = document.getElementById('currencySelector');
+        const quoteModal = document.getElementById('quoteModal');
+        const quoteForm = document.getElementById('quoteForm');
+        const contactForm = document.getElementById('contactForm');
+
+        // Current currency state
+        let currentCurrency = 'naira';
+
+        // Initialize the page
+        function init() {
+            renderVehicles();
+            setupEventListeners();
+        }
+
+        // Render vehicles dynamically
+        function renderVehicles() {
+            vehiclesGrid.innerHTML = '';
+
+            vehicles.forEach(vehicle => {
+                const price = currentCurrency === 'naira' ? vehicle.price_naira : vehicle.price_usd;
+                const currencySymbol = currentCurrency === 'naira' ? '₦' : '$';
+
+                const vehicleCard = document.createElement('div');
+                vehicleCard.className = 'vehicle-card';
+                vehicleCard.innerHTML = `
+                    <img src="${vehicle.image}" alt="${vehicle.model}" class="vehicle-image">
+                    <div class="vehicle-info">
+                        <h3>${vehicle.model}</h3>
+                        <p class="vehicle-specs">${vehicle.year} • ${vehicle.engine} • ${vehicle.transmission}</p>
+                        <p class="vehicle-price">${curr
